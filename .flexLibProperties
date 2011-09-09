@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="false" version="1">
+  <includeClasses>
+    <classEntry path="org.groe.html.Constants"/>
+    <classEntry path="org.groe.html.Element"/>
+    <classEntry path="org.groe.html.FlashHtmlRenderer"/>
+    <classEntry path="org.groe.html.HtmlContainer"/>
+    <classEntry path="org.groe.html.HtmlParser"/>
+    <classEntry path="org.groe.html.ObjectMapFlashHtmlRenderer"/>
+    <classEntry path="org.groe.html.components.BlockLayoutContainer"/>
+    <classEntry path="org.groe.html.components.HtmlLayoutContainer"/>
+    <classEntry path="org.groe.html.components.HtmlLayoutGridItem"/>
+    <classEntry path="org.groe.html.components.InlineLayoutContainer"/>
+    <classEntry path="org.groe.html.components.ListItem"/>
+    <classEntry path="org.groe.html.components.RootHtmlContainer"/>
+    <classEntry path="org.groe.html.components.SimpleText"/>
+    <classEntry path="org.groe.html.events.ObjectLoadedEvent"/>
+    <classEntry path="org.groe.html.util.StringUtil"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

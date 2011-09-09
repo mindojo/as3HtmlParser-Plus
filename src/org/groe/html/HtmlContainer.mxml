@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<mx:Box xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:groe_org="org.groe.html.components.*"
+	width="100%"
+	horizontalScrollPolicy="off"
+	verticalScrollPolicy="off"
+	initialize="init();">
+
+	<mx:Metadata>
+		[Event("objectLoaded", type="org.groe.html.events.ObjectLoadedEvent")]
+		[Event("renderComplete", type="flash.events.Event")]
+	</mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+		import flash.events.Event;
+		import mx.core.UIComponent;
+
+		import org.groe.html.*;
+		import org.groe.html.events.*;
+
+		protected var _htmlString:String = null;
+		protected var _e:Element = null;
+		
+		protected var initCalled:Boolean = false;
+
+		public function get htmlString():String
+		{
+			return _htmlString;
+		}
+
+		[Inspectable(defaultValue="null")]
+		public function set htmlString(value:String):void
+		{
+			_htmlString = value;
+			_e = HtmlParser.parse(_htmlString);
+			if (initCalled)
+				this.dispatchEvent( new Event("elementSet") );
+		}
+
+		public function init():void
+		{
+			var self:UIComponent = this;
+
+			rootHtmlContainer.addEventListener(ObjectLoadedEvent.EVENT_NAME, function(event:Event):void
+				{
+					self.dispatchEvent(event);
+				});
+				
+			self.addEventListener("elementSet", function(event:Event):void
+				{
+					rootHtmlContainer.removeAllChildren();
+					FlashHtmlRenderer.renderIntoElement(_e, rootHtmlContainer);
+					self.dispatchEvent( new Event("renderComplete") );
+				});
+
+			if (_htmlString != null)
+				this.dispatchEvent( new Event("elementSet") );
+				
+			initCalled = true;
+		}
+		
+		//debugging
+		override public function setStyle(styleProp:String, newValue:*):void {
+			super.setStyle(styleProp, newValue);
+		}
+		
+	]]>
+	</mx:Script>
+
+	<groe_org:RootHtmlContainer id="rootHtmlContainer"/>
+</mx:Box>
