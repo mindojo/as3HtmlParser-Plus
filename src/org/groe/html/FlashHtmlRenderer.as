@@ -3,21 +3,25 @@
  */
 package org.groe.html
 {
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
-	import mx.core.Container;
-	import mx.core.UIComponent;
+	
 	import mx.containers.Grid;
 	import mx.containers.GridItem;
 	import mx.containers.GridRow;
 	import mx.containers.HBox;
 	import mx.containers.VBox;
+	import mx.controls.Alert;
 	import mx.controls.Button;
-	import mx.controls.LinkButton;
 	import mx.controls.Image;
+	import mx.controls.LinkButton;
 	import mx.controls.SWFLoader;
 	import mx.controls.Text;
+	import mx.core.Container;
+	import mx.core.UIComponent;
+	
 	import org.groe.html.components.*;
 	import org.groe.html.events.*;
 	import org.groe.html.util.StringUtil;
@@ -69,16 +73,21 @@ package org.groe.html
 			var intValue:int, intValue2:int;
 			var length:int;
 			var a:Array;
-			var i:int;
+			var i:int;						
 
 			// If no component exists for this element type, return null
 			var o:UIComponent = createBaseObjectForElement(e);
+			
+			//Alert.show('renderHelper: ' + e._tagName + " " + o);
+			
 			if (o == null)
-				return null;
+				return null;						
 			
 			// If element cannot be set on this component, return null
 			if ( !setElementOnComponent(o, e) )
+			{
 				return null;
+			}
 
 			if (o != null)
 				setStandardAttributes(o, e);
@@ -556,6 +565,10 @@ package org.groe.html
 					tempE.tagName = "span";
 					tempE.addChildElement(e);
 					return renderHelper(tempE, null, rootComponent);
+					
+				case Constants.elementTypeSUB:
+				case Constants.elementTypeSUP:									
+					break;
 
 				default:
 					o = null;
@@ -640,6 +653,16 @@ package org.groe.html
 				case Constants.elementTypeTHEAD:
 				case Constants.elementTypeTFOOT:
 					return new Container();
+				case Constants.elementTypeSUP:
+					var out:UIComponent = new GridItem();
+					out.setStyle("paddingTop", supPadding);			
+					out.scaleX = out.scaleY = subSupScale;
+					return out;
+				case Constants.elementTypeSUB:
+					var out:UIComponent = new GridItem();
+					out.setStyle("paddingBottom", subPadding);			
+					out.scaleX = out.scaleY = subSupScale;
+					return out;					
 			}
 
 			if (e.isBlock)
@@ -648,6 +671,10 @@ package org.groe.html
 				return new InlineLayoutContainer();
 		}
 
+		public static const subSupScale:Number = 0.7;
+		public static const subPadding:Number = -16;
+		public static const supPadding:Number = -3;
+		
 		public function setStandardAttributes(o:UIComponent, e:Element):void
 		{
 			//Handle: id, class, title
@@ -1218,7 +1245,7 @@ if (addTrailingSpace)
 				if (o is Text)
 				{
 					text = o as Text;
-					text.text = e.text;
+					text.text = e.text;					
 				}
 				parentComponent.addChild(o);
 			}
