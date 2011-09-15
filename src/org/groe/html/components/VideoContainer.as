@@ -10,7 +10,7 @@ package org.groe.html.components
 	import org.groe.html.Element;
 	import org.groe.html.HtmlContainer;
 
-	public class VideoContainer extends HtmlLayoutContainer
+	public class VideoContainer extends Canvas
 	{
 
 		private var ta:TextArea;
@@ -19,6 +19,9 @@ package org.groe.html.components
 		private var _width:Number;
 		private var _height:Number;
 		private var _source:String;
+		private var _videoID:String;
+		
+		private var ytp:YTPlayerContainer;
 		
 		public function VideoContainer()
 		{
@@ -27,23 +30,31 @@ package org.groe.html.components
 			buttonMode = false;
 			useHandCursor = false;
 			
-			setStyle("borderColor", "#FF0000");
-			setStyle("borderStyle", "solid");	
+			ytp = new YTPlayerContainer();
+			addElement(ytp);
 
 		}
 		
-		
-		
+		public function kill():void
+		{
+			ytp.stopVideo();			
+		}
+					
 		override public function set data(value:Object):void
 		{
 			_width = value.attributeMap["width"];
 			_height = value.attributeMap["height"];
 			_source = findSource(value as Element);
+			_videoID = matchYTContent(_source);		
 			
-			Alert.show("w:\t" + _width + "\nh:\t" + _height + "\ns:\t" + _source);
+			//Alert.show("w:\t" + _width + "\nh:\t" + _height + "\ns:\t" + _source + "\nyt:\t" + matchYTContent(_source));
 			
 			width = _width;
 			height = _height;
+			
+			ytp.videoID = _videoID;
+			ytp.playerWidth = _width;
+			ytp.playerHeight = _height;				
 			
 			super.data = value;
 		}
@@ -61,7 +72,15 @@ package org.groe.html.components
 				}
 			}
 			return "";
-		}		
+		}	
+		
+		private function matchYTContent(value:String):String
+		{			
+			var ytVideoIdRegExp:RegExp = /(.*?\/)*(.*?)\?(.*)/g;
+			var match:Object = ytVideoIdRegExp.exec( value );
+			if (match) return match[2];
+			return "";
+		}
 
 	}
 }
