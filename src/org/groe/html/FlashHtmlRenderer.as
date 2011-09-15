@@ -6,18 +6,20 @@ package org.groe.html
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
-	import mx.core.Container;
-	import mx.core.UIComponent;
+	
 	import mx.containers.Grid;
 	import mx.containers.GridItem;
 	import mx.containers.GridRow;
 	import mx.containers.HBox;
 	import mx.containers.VBox;
 	import mx.controls.Button;
-	import mx.controls.LinkButton;
 	import mx.controls.Image;
+	import mx.controls.LinkButton;
 	import mx.controls.SWFLoader;
 	import mx.controls.Text;
+	import mx.core.Container;
+	import mx.core.UIComponent;
+	
 	import org.groe.html.components.*;
 	import org.groe.html.events.*;
 	import org.groe.html.util.StringUtil;
@@ -556,6 +558,9 @@ package org.groe.html
 					tempE.tagName = "span";
 					tempE.addChildElement(e);
 					return renderHelper(tempE, null, rootComponent);
+					
+				case Constants.elementTypeOBJECT:						
+					break;					
 
 				default:
 					o = null;
@@ -640,6 +645,8 @@ package org.groe.html
 				case Constants.elementTypeTHEAD:
 				case Constants.elementTypeTFOOT:
 					return new Container();
+				case Constants.elementTypeOBJECT:
+					return new VideoContainer();
 			}
 
 			if (e.isBlock)
@@ -1337,6 +1344,8 @@ if (addTrailingSpace)
 				(o as Button).data = e;
 			else if (o is Text)
 				(o as Text).data = e;
+			else if (o is VideoContainer)
+				(o as VideoContainer).data = e;
 			else
 				return false;
 			
