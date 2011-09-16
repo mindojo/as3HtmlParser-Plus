@@ -559,7 +559,9 @@ package org.groe.html
 					tempE.addChildElement(e);
 					return renderHelper(tempE, null, rootComponent);
 					
-				case Constants.elementTypeOBJECT:						
+				case Constants.elementTypeOBJECT:
+					setDimensions(o, e);
+					(o as VideoContainer).rootComponent = rootComponent;
 					break;					
 
 				default:
@@ -1452,6 +1454,8 @@ if (addTrailingSpace)
 				return (o as Button).data as Element;
 			else if (o is Text)
 				return (o as Text).data as Element;
+			else if (o is VideoContainer)
+				return (o as VideoContainer).data as Element;
 
 			return null;
 		}

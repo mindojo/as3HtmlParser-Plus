@@ -69,22 +69,47 @@
 			super.setStyle(styleProp, newValue);
 		}
 			
-		public function kill():void
+		public function stopMedia():void
 		{
+			//get all video containers
+			var videoContainers:Array = getVideoContainers();
+			for (var i:int=0; i<videoContainers.length; i++) 
+			{
+				//and stop video				
+				(videoContainers[i] as VideoContainer).stopVideo();
+			}
+		}
+			
+		public function killVideo():void
+		{
+			//get all video containers
+			var videoContainers:Array = getVideoContainers();
+			for (var i:int=0; i<videoContainers.length; i++) 
+			{
+				//and stop video								
+				(videoContainers[i] as VideoContainer).stopVideo();
+				(videoContainers[i] as VideoContainer).killVideo();
+			}
+		}
+			
+		private function getVideoContainers():Array
+		{
+			//get all sub children
 			var children:Array = [];
 			getChildrenElements(rootHtmlContainer, children);
-			children.length;
 			
+			//get all video containers
 			var videoContainers:Array = [];
 			for (var i:int=0; i<children.length; i++) 
 			{
 				if (children[i] is VideoContainer)
 				{
-					videoContainers.push(children[i]);
-					(children[i] as VideoContainer).kill();
+					//and stop video
+					videoContainers.push(children[i]);			
 				}
 			}			
-			videoContainers.length;
+			
+			return videoContainers;
 		}
 			
 		private function getChildrenElements(c:UIComponent, a:Array):void

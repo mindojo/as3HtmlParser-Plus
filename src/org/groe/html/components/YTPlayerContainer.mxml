@@ -14,11 +14,11 @@
 			import mx.events.FlexEvent;
 			
 			private var ytPlayer:Object;			
-			private var my_loader:Loader;	
+			private var _loader:Loader;	
 			
 			private var _videoID:String = "";
-			private var _playerWidth:Number = 480;
-			private var _playerHeight:Number = 360;
+			private var _playerWidth:Number = 100;
+			private var _playerHeight:Number = 100;
 			
 			private var _playerReadyFlag:Boolean = false;
 			
@@ -85,8 +85,8 @@
 			protected function onLoaderInit(e:Event):void 
 			{
 				var container:UIComponent = new UIComponent();
-				container.addChild(my_loader);
-				ytPlayer = my_loader.content;
+				container.addChild(_loader);
+				ytPlayer = _loader.content;
 				ytPlayer.addEventListener("onReady", onPlayerReady);
 				addElement(container);
 			}
@@ -115,9 +115,9 @@
 				Security.allowDomain("www.youtube.com");
 				Security.allowDomain("*");
 				
-				my_loader = new Loader();
-				my_loader.load(new URLRequest(_playerURL), new LoaderContext());
-				my_loader.contentLoaderInfo.addEventListener(Event.INIT, onLoaderInit);
+				_loader = new Loader();
+				_loader.load(new URLRequest(_playerURL), new LoaderContext());
+				_loader.contentLoaderInfo.addEventListener(Event.INIT, onLoaderInit);
 			}
 			
 			private function playVideo():void
@@ -136,6 +136,19 @@
 					ytPlayer.stopVideo();
 					ytPlayer.destroy();
 				}
+			}
+			
+			public function setSize(w:Number, h:Number):void
+			{
+				if (ytPlayer) 
+				{
+					ytPlayer.setSize(w,h);
+				}				
+			}
+			
+			public function kill():void
+			{
+				_loader.unloadAndStop();
 			}
 				
 			
