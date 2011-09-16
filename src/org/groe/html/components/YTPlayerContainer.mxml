@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   creationComplete="creationCompleteHandler(event)">
+		
+	<fx:Declarations>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+			
+			private var ytPlayer:Object;			
+			private var _loader:Loader;	
+			
+			private var _videoID:String = "";
+			private var _playerWidth:Number = 100;
+			private var _playerHeight:Number = 100;
+			
+			private var _playerReadyFlag:Boolean = false;
+			
+			//chromeless player
+			private var _chromelessPlayerURL:String = "http://www.youtube.com/apiplayer?version=3";
+			
+			//embedded player
+			private var _embeddedPlayerURL:String = "http://www.youtube.com/v/#VIDEO_ID?version=3";
+			
+			////////////////////////////////////////////////////////////////////////////////
+			//
+			//	Getters / Setters
+			//
+			////////////////////////////////////////////////////////////////////////////////
+			private var _playerURL:String;
+			
+			[Bindable]
+			public function get playerWidth():Number
+			{
+				return _playerWidth;
+			}
+
+			public function set playerWidth(value:Number):void
+			{
+				_playerWidth = value;
+			}
+
+			[Bindable]
+			public function get playerHeight():Number
+			{
+				return _playerHeight;
+			}
+
+			public function set playerHeight(value:Number):void
+			{
+				_playerHeight = value;
+			}
+
+			[Bindable]
+			public function get videoID():String
+			{
+				return _videoID;
+			}
+
+			public function set videoID(value:String):void
+			{
+				_videoID = value;
+				
+				if (_playerReadyFlag)
+				{
+					playVideo();
+				}
+				
+				_playerURL = _embeddedPlayerURL.replace("#VIDEO_ID", _videoID);
+				loadYoutubePlayer();
+			}
+			
+			////////////////////////////////////////////////////////////////////////////////
+			//
+			//	Event handling section
+			//
+			////////////////////////////////////////////////////////////////////////////////	
+			
+			protected function onLoaderInit(e:Event):void 
+			{
+				var container:UIComponent = new UIComponent();
+				container.addChild(_loader);
+				ytPlayer = _loader.content;
+				ytPlayer.addEventListener("onReady", onPlayerReady);
+				addElement(container);
+			}
+			
+			protected function onPlayerReady(e:Event):void 
+			{
+				ytPlayer.setSize(playerWidth,playerHeight);
+				playVideo();
+				_playerReadyFlag = true;
+				
+			}	
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				//loadYoutubePlayer();				
+			}
+			
+			////////////////////////////////////////////////////////////////////////////////
+			//
+			//	Control
+			//
+			////////////////////////////////////////////////////////////////////////////////
+			
+			private function loadYoutubePlayer():void
+			{
+				Security.allowDomain("www.youtube.com");
+				Security.allowDomain("*");
+				
+				_loader = new Loader();
+				_loader.load(new URLRequest(_playerURL), new LoaderContext());
+				_loader.contentLoaderInfo.addEventListener(Event.INIT, onLoaderInit);
+			}
+			
+			private function playVideo():void
+			{
+				if (videoID) 
+				{
+					ytPlayer.cueVideoById(videoID,0);
+					ytPlayer.playVideo();					
+				}	
+			}
+			
+			public function stopVideo():void
+			{
+				if (ytPlayer)
+				{
+					ytPlayer.stopVideo();
+					ytPlayer.destroy();
+				}
+			}
+			
+			public function setSize(w:Number, h:Number):void
+			{
+				if (ytPlayer) 
+				{
+					ytPlayer.setSize(w,h);
+				}				
+			}
+			
+			public function kill():void
+			{
+				_loader.unloadAndStop();
+			}
+				
+			
+		]]>
+	</fx:Script>
+	
+</mx:Canvas>

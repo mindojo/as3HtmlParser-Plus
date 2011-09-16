@@ -13,11 +13,15 @@
 
 	<mx:Script>
 		<![CDATA[
-		import flash.events.Event;
-		import mx.core.UIComponent;
-
-		import org.groe.html.*;
-		import org.groe.html.events.*;
+			import flash.events.Event;
+			
+			import mx.core.UIComponent;
+			
+			import org.groe.html.*;
+			import org.groe.html.components.VideoContainer;
+			import org.groe.html.events.*;
+			
+			import spark.components.VideoPlayer;
 
 		protected var _htmlString:String = null;
 		protected var _e:Element = null;
@@ -63,6 +67,62 @@
 		//debugging
 		override public function setStyle(styleProp:String, newValue:*):void {
 			super.setStyle(styleProp, newValue);
+		}
+			
+		public function stopMedia():void
+		{
+			//get all video containers
+			var videoContainers:Array = getVideoContainers();
+			for (var i:int=0; i<videoContainers.length; i++) 
+			{
+				//and stop video				
+				(videoContainers[i] as VideoContainer).stopVideo();
+			}
+		}
+			
+		public function killVideo():void
+		{
+			//get all video containers
+			var videoContainers:Array = getVideoContainers();
+			for (var i:int=0; i<videoContainers.length; i++) 
+			{
+				//and stop video								
+				(videoContainers[i] as VideoContainer).stopVideo();
+				(videoContainers[i] as VideoContainer).killVideo();
+			}
+		}
+			
+		private function getVideoContainers():Array
+		{
+			//get all sub children
+			var children:Array = [];
+			getChildrenElements(rootHtmlContainer, children);
+			
+			//get all video containers
+			var videoContainers:Array = [];
+			for (var i:int=0; i<children.length; i++) 
+			{
+				if (children[i] is VideoContainer)
+				{
+					//and stop video
+					videoContainers.push(children[i]);			
+				}
+			}			
+			
+			return videoContainers;
+		}
+			
+		private function getChildrenElements(c:UIComponent, a:Array):void
+		{
+			a.push(c);
+			for (var i:int=0; i<c.numChildren; i++) 
+			{				
+				if (c.getChildAt(i) is UIComponent) 
+				{					
+					//a.push( c.getChildAt(i) as UIComponent );
+					getChildrenElements(c.getChildAt(i) as UIComponent, a);
+				}
+			}
 		}
 		
 	]]>
