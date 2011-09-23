@@ -3,6 +3,7 @@
  */
 package org.groe.html
 {
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
@@ -12,6 +13,7 @@ package org.groe.html
 	import mx.containers.GridRow;
 	import mx.containers.HBox;
 	import mx.containers.VBox;
+	import mx.controls.Alert;
 	import mx.controls.Button;
 	import mx.controls.Image;
 	import mx.controls.LinkButton;
@@ -71,16 +73,21 @@ package org.groe.html
 			var intValue:int, intValue2:int;
 			var length:int;
 			var a:Array;
-			var i:int;
+			var i:int;						
 
 			// If no component exists for this element type, return null
 			var o:UIComponent = createBaseObjectForElement(e);
+			
+			//Alert.show('renderHelper: ' + e._tagName + " " + o);
+			
 			if (o == null)
-				return null;
+				return null;						
 			
 			// If element cannot be set on this component, return null
 			if ( !setElementOnComponent(o, e) )
+			{
 				return null;
+			}
 
 			if (o != null)
 				setStandardAttributes(o, e);
@@ -559,6 +566,10 @@ package org.groe.html
 					tempE.addChildElement(e);
 					return renderHelper(tempE, null, rootComponent);
 					
+				case Constants.elementTypeSUB:
+				case Constants.elementTypeSUP:									
+					break;
+					
 				case Constants.elementTypeOBJECT:
 					setDimensions(o, e);
 					(o as VideoContainer).rootComponent = rootComponent;
@@ -623,7 +634,7 @@ package org.groe.html
 
 		public function createBaseObjectForElement(e:Element):UIComponent
 		{
-			
+			var out:UIComponent;
 			switch (e.elementType)
 			{
 				case Constants.elementTypeBR:
@@ -647,6 +658,24 @@ package org.groe.html
 				case Constants.elementTypeTHEAD:
 				case Constants.elementTypeTFOOT:
 					return new Container();
+				case Constants.elementTypeSUP:			
+					out = new HtmlLayoutGridItem();
+					out.setStyle("paddingTop", 5);	
+					out.setStyle("paddingBottom", 5);
+					out.setStyle("paddingLeft", 1);
+					out.setStyle("paddingRight", 1);
+					out.setStyle("fontSize", 11);
+					return out;
+					
+
+				case Constants.elementTypeSUB:
+					out = new HtmlLayoutGridItem();
+					out.setStyle("paddingBottom", -8);
+					out.setStyle("paddingLeft", 1);
+					out.setStyle("paddingRight", 1);
+					out.setStyle("fontSize", 11);
+					return out;
+
 				case Constants.elementTypeOBJECT:
 					return new VideoContainer();
 			}
@@ -656,7 +685,7 @@ package org.groe.html
 			else
 				return new InlineLayoutContainer();
 		}
-
+		
 		public function setStandardAttributes(o:UIComponent, e:Element):void
 		{
 			//Handle: id, class, title
@@ -1227,7 +1256,7 @@ if (addTrailingSpace)
 				if (o is Text)
 				{
 					text = o as Text;
-					text.text = e.text;
+					text.text = e.text;					
 				}
 				parentComponent.addChild(o);
 			}
