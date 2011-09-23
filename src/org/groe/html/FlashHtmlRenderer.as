@@ -634,7 +634,7 @@ package org.groe.html
 
 		public function createBaseObjectForElement(e:Element):UIComponent
 		{
-			
+			var out:UIComponent;
 			switch (e.elementType)
 			{
 				case Constants.elementTypeBR:
@@ -659,13 +659,28 @@ package org.groe.html
 				case Constants.elementTypeTFOOT:
 					return new Container();
 				case Constants.elementTypeSUP:
-					var out:UIComponent = new GridItem();
-					out.setStyle("paddingTop", supPadding);			
-					out.scaleX = out.scaleY = subSupScale;
+					/*out = new GridItem();
+					//out.setStyle("paddingTop", 0);	
+					//out.setStyle("paddingLeft", 0);
+					out.scaleX = out.scaleY = 0.9;	
+					out.setStyle( "paddingLeft", 2 );
+					out.setStyle( "paddingTop", 10 );
+					return out;*/
+					
+					
+					//return new HtmlLayoutGridItem();
+					
+					out = new HtmlLayoutGridItem();
+					out.setStyle("paddingTop", 5);	
+					out.setStyle("paddingBottom", 5);
+					out.setStyle("paddingLeft", 1);
+					out.setStyle("paddingRight", 1);
+					
 					return out;
+					
 
 				case Constants.elementTypeSUB:
-					var out:UIComponent = new GridItem();
+					out = new GridItem();
 					out.setStyle("paddingBottom", subPadding);			
 					out.scaleX = out.scaleY = subSupScale;
 					return out;					
@@ -680,9 +695,9 @@ package org.groe.html
 				return new InlineLayoutContainer();
 		}
 
-		public static const subSupScale:Number = 0.7;
-		public static const subPadding:Number = -16;
-		public static const supPadding:Number = -3;
+		public static const subSupScale:Number = 0.75;
+		public static const subPadding:Number = -14;
+		public static const supPadding:Number = -2;
 		
 		public function setStandardAttributes(o:UIComponent, e:Element):void
 		{
