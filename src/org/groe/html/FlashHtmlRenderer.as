@@ -569,6 +569,11 @@ package org.groe.html
 				case Constants.elementTypeSUB:
 				case Constants.elementTypeSUP:									
 					break;
+					
+				case Constants.elementTypeOBJECT:
+					setDimensions(o, e);
+					(o as VideoContainer).rootComponent = rootComponent;
+					break;					
 
 				default:
 					o = null;
@@ -658,11 +663,15 @@ package org.groe.html
 					out.setStyle("paddingTop", supPadding);			
 					out.scaleX = out.scaleY = subSupScale;
 					return out;
+
 				case Constants.elementTypeSUB:
 					var out:UIComponent = new GridItem();
 					out.setStyle("paddingBottom", subPadding);			
 					out.scaleX = out.scaleY = subSupScale;
 					return out;					
+
+				case Constants.elementTypeOBJECT:
+					return new VideoContainer();
 			}
 
 			if (e.isBlock)
@@ -1364,6 +1373,8 @@ if (addTrailingSpace)
 				(o as Button).data = e;
 			else if (o is Text)
 				(o as Text).data = e;
+			else if (o is VideoContainer)
+				(o as VideoContainer).data = e;
 			else
 				return false;
 			
@@ -1470,6 +1481,8 @@ if (addTrailingSpace)
 				return (o as Button).data as Element;
 			else if (o is Text)
 				return (o as Text).data as Element;
+			else if (o is VideoContainer)
+				return (o as VideoContainer).data as Element;
 
 			return null;
 		}

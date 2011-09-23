@@ -792,6 +792,11 @@ package org.groe.html
 		 */
 		public static function addMissingCloseTag(e:Element):Boolean
 		{
+			if (!e) 
+			{
+				return false;
+			}
+			
 			switch (e.elementType)
 			{
 				case Constants.elementTypeP:

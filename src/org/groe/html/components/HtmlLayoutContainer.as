@@ -68,7 +68,7 @@ package org.groe.html.components
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-		
+			
 			if ( isNaN(unscaledWidth) && isNaN(unscaledHeight) )
 				return;
 
