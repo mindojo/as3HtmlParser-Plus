@@ -658,32 +658,23 @@ package org.groe.html
 				case Constants.elementTypeTHEAD:
 				case Constants.elementTypeTFOOT:
 					return new Container();
-				case Constants.elementTypeSUP:
-					/*out = new GridItem();
-					//out.setStyle("paddingTop", 0);	
-					//out.setStyle("paddingLeft", 0);
-					out.scaleX = out.scaleY = 0.9;	
-					out.setStyle( "paddingLeft", 2 );
-					out.setStyle( "paddingTop", 10 );
-					return out;*/
-					
-					
-					//return new HtmlLayoutGridItem();
-					
+				case Constants.elementTypeSUP:			
 					out = new HtmlLayoutGridItem();
 					out.setStyle("paddingTop", 5);	
 					out.setStyle("paddingBottom", 5);
 					out.setStyle("paddingLeft", 1);
 					out.setStyle("paddingRight", 1);
-					
+					out.setStyle("fontSize", 11);
 					return out;
 					
 
 				case Constants.elementTypeSUB:
-					out = new GridItem();
-					out.setStyle("paddingBottom", subPadding);			
-					out.scaleX = out.scaleY = subSupScale;
-					return out;					
+					out = new HtmlLayoutGridItem();
+					out.setStyle("paddingBottom", -8);
+					out.setStyle("paddingLeft", 1);
+					out.setStyle("paddingRight", 1);
+					out.setStyle("fontSize", 11);
+					return out;
 
 				case Constants.elementTypeOBJECT:
 					return new VideoContainer();
@@ -694,10 +685,6 @@ package org.groe.html
 			else
 				return new InlineLayoutContainer();
 		}
-
-		public static const subSupScale:Number = 0.75;
-		public static const subPadding:Number = -14;
-		public static const supPadding:Number = -2;
 		
 		public function setStandardAttributes(o:UIComponent, e:Element):void
 		{
