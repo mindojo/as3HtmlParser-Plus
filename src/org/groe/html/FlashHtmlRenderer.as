@@ -39,6 +39,11 @@ package org.groe.html
 		public static const textSpaceOffsetX:int = -2;
 		public static const defaultHorizontalAlign:int = Constants.horizontalAlignTypeLeft;
 		public static const defaultVerticalAlign:int = Constants.verticalAlignTypeBaseline;
+		
+		public static const fontFamilyBold:String = "DroidSansNonCFFBold";
+		public static const fontFamilyItalic:String = "DroidNonCFFItalic";
+		
+		
 
 
 		public function FlashHtmlRenderer():void
@@ -273,7 +278,8 @@ package org.groe.html
 				
 				case Constants.elementTypeB:
 				case Constants.elementTypeSTRONG:
-					o.setStyle("fontWeight", "bold");
+					//o.setStyle("fontFace", "bold");										
+					o.setStyle("fontFamily", fontFamilyBold);										
 					break;
 
 				case Constants.elementTypeBR:
@@ -303,7 +309,8 @@ package org.groe.html
 				case Constants.elementTypeEM:
 				case Constants.elementTypeI:
 				case Constants.elementTypeVAR:
-					o.setStyle("fontStyle", "italic");
+					//o.setStyle("fontStyle", "italic");
+					o.setStyle("fontFamily", fontFamilyItalic);					
 					break;
 
 				case Constants.elementTypeINS:
