@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Image xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.UIComponent;
+			import mx.events.ResizeEvent;
+			private var _rootComponent:UIComponent;
+			
+			public function get rootComponent():UIComponent
+			{
+				return _rootComponent;
+			}
+
+			public function set rootComponent(value:UIComponent):void
+			{
+				_rootComponent = value;
+				_rootComponent.addEventListener(Event.RESIZE, rootResizeHandler);
+					
+				scaleContent = true;
+				maintainAspectRatio = true;
+			}
+			
+			private var defaultWidth:Number = -1;
+			private var defaultHeight:Number = -1;
+			
+			override public function set width(value:Number):void
+			{
+				super.width = value;
+				if (defaultWidth == -1) defaultWidth = value;
+			}
+			
+			override public function set height(value:Number):void
+			{
+				super.height = value;
+				if (defaultHeight == -1) defaultHeight = value;
+			}
+
+			protected function rootResizeHandler(event:ResizeEvent):void
+			{
+				if (rootComponent.width != 0 
+						&& rootComponent.height != 0 
+							&& width != 0 
+								&& height != 0 )
+				{
+						
+					if (defaultWidth == -1 || defaultHeight == -1)
+					{
+						if (contentWidth) defaultWidth = contentWidth;
+						if (contentHeight) defaultHeight = contentHeight;
+						return;						
+					}
+					
+					if (defaultWidth > rootComponent.width || defaultHeight > rootComponent.height)
+					{
+						var newWidth:Number = rootComponent.width;
+						var newHeight:Number = (rootComponent.width / defaultWidth) * defaultHeight;
+						width = newWidth;
+						height = newHeight 
+					}
+					else
+					{
+						width = defaultWidth;
+						height = defaultHeight;
+					}
+					
+				}
+				
+			}
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+			}
+			
+			//TODO
+			// - kill resize handler
+			
+		]]>
+	</fx:Script>
+	
+	
+</mx:Image>
