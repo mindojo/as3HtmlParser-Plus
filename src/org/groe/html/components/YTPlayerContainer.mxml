@@ -2,7 +2,8 @@
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
-		   creationComplete="creationCompleteHandler(event)">
+		   creationComplete="creationCompleteHandler(event)"
+		   clipContent="true">
 		
 	<fx:Declarations>
 	</fx:Declarations>
@@ -27,6 +28,8 @@
 			
 			//embedded player
 			private var _embeddedPlayerURL:String = "http://www.youtube.com/v/#VIDEO_ID?version=3";
+			
+			private var _mask:Sprite;
 			
 			////////////////////////////////////////////////////////////////////////////////
 			//
@@ -93,7 +96,19 @@
 			
 			protected function onPlayerReady(e:Event):void 
 			{
-				ytPlayer.setSize(playerWidth,playerHeight);
+				if (_initialWidth != -1 && _initialHeight != -1)
+				{
+					ytPlayer.setSize(_initialWidth,_initialHeight);
+					width = _initialWidth;
+					height = _initialHeight;
+					
+					resizeMask(width,height);
+				}
+				else
+				{
+					ytPlayer.setSize(playerWidth,playerHeight);
+					resizeMask(playerWidth,playerHeight);
+				}
 				playVideo();
 				_playerReadyFlag = true;
 				
@@ -101,7 +116,24 @@
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
-				//loadYoutubePlayer();				
+				
+				var uic:UIComponent = new UIComponent();
+				_mask = new Sprite();
+				_mask.graphics.beginFill(0xff0000);
+				if (_initialWidth!=-1 && _initialHeight!= -1)
+				{
+					_mask.graphics.drawRect(0,0,_initialWidth,_initialHeight);
+				}
+				else
+				{
+					_mask.graphics.drawRect(0,0,playerWidth,playerHeight);
+				}
+				_mask.graphics.endFill();
+				uic.addChild(_mask);
+				addElement(uic);
+				
+				mask = uic;
+				
 			}
 			
 			////////////////////////////////////////////////////////////////////////////////
@@ -138,12 +170,30 @@
 				}
 			}
 			
+			private var _initialWidth:Number = -1;
+			private var _initialHeight:Number = -1;
 			public function setSize(w:Number, h:Number):void
 			{
 				if (ytPlayer) 
 				{
 					ytPlayer.setSize(w,h);
 				}				
+				else
+				{
+					_initialWidth = w;
+					_initialHeight = h;
+				}
+				
+				resizeMask(w,h);
+			}
+			
+			private function resizeMask(w:Number, h:Number):void
+			{
+				if (_mask) 
+				{	
+					_mask.width = w;
+					_mask.height = h;
+				}	
 			}
 			
 			public function kill():void
@@ -154,5 +204,5 @@
 			
 		]]>
 	</fx:Script>
-	
+		
 </mx:Canvas>

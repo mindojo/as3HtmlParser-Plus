@@ -8,6 +8,7 @@ package org.groe.html.components
 	
 	import mx.containers.Box;
 	import mx.controls.Alert;
+	import mx.controls.Image;
 	import mx.core.UIComponent;
 
 	public class RootHtmlContainer extends Box
@@ -57,7 +58,7 @@ package org.groe.html.components
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-		
+			
 			if ( isNaN(unscaledWidth) && isNaN(unscaledHeight) )
 				return;
 			
@@ -66,6 +67,7 @@ package org.groe.html.components
 			{
 				var d:DisplayObject = getChildAt(0);
 				setActualSize(updateWidth(), d.height);
+
 //				height = d.height;
 //Alert.show("d.height=" + d.height);
 //Alert.show("d.measuredHeight=" + (d as UIComponent).measuredHeight);

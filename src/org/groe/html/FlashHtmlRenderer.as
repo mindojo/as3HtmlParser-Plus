@@ -217,10 +217,18 @@ package org.groe.html
 							setDimensions(component, el, true);
 							rootComponent.dispatchEvent( new ObjectLoadedEvent(component) );
 						});
+					
 
 					//Finally set source to start loading
 					if (o is Image)
+					{
 						(o as Image).source = e.attributeMap["src"];
+					}
+					
+					if (o is ScaledImage)
+					{
+						(o as ScaledImage).rootComponent = rootComponent;
+					}
 
 					break;
 
@@ -649,7 +657,7 @@ package org.groe.html
 				case Constants.elementTypeBUTTON:
 					return new Button();
 				case Constants.elementTypeIMG:
-					return new Image();
+					return new ScaledImage();
 				case Constants.elementTypeLI:
 					return new ListItem();
 				case Constants.elementTypeTABLE:
@@ -1538,8 +1546,8 @@ Alert.show("self=" + self
 	+ ", self.height=" + self.height
 );
 */
-
-							self.setActualSize(self.parent.width * self.percentWidth / 100, self.height);
+							if (self && self.parent) self.setActualSize(self.parent.width * self.percentWidth / 100, self.height);	
+							
 						});
 				});
 		}
