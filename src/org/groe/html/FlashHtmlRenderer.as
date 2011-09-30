@@ -1546,8 +1546,8 @@ Alert.show("self=" + self
 	+ ", self.height=" + self.height
 );
 */
-
-							self.setActualSize(self.parent.width * self.percentWidth / 100, self.height);
+							if (self && self.parent) self.setActualSize(self.parent.width * self.percentWidth / 100, self.height);	
+							
 						});
 				});
 		}

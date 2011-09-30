@@ -87,13 +87,15 @@
 				
 			public function kill():void
 			{
+				var i:int;
+				
 				//get all sub children
 				var children:Array = [];
 				getChildrenElements(rootHtmlContainer, children);
 				
 				//get all video containers
 				var videoContainers:Array = getVideoContainers(children);
-				for (var i:int=0; i<videoContainers.length; i++) 
+				for (i=0; i<videoContainers.length; i++) 
 				{
 					//and stop video								
 					(videoContainers[i] as VideoContainer).stopVideo();
@@ -102,7 +104,7 @@
 				
 				//kill all scaled images
 				var scaledImages:Array = getScalableImages(children);
-				for (var i:int=0; i<scaledImages.length; i++) 
+				for (i=0; i<scaledImages.length; i++) 
 				{
 					(scaledImages[i] as ScaledImage).kill();
 				}

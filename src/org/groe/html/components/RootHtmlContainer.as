@@ -59,8 +59,6 @@ package org.groe.html.components
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			
-			trace ("resize", this);
-		
 			if ( isNaN(unscaledWidth) && isNaN(unscaledHeight) )
 				return;
 			
