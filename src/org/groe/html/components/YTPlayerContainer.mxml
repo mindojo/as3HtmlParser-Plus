@@ -93,7 +93,16 @@
 			
 			protected function onPlayerReady(e:Event):void 
 			{
-				ytPlayer.setSize(playerWidth,playerHeight);
+				if (_initialWidth != -1 && _initialHeight != -1)
+				{
+					ytPlayer.setSize(_initialWidth,_initialHeight);
+					width = _initialWidth;
+					height = _initialHeight;
+				}
+				else
+				{
+					ytPlayer.setSize(playerWidth,playerHeight);
+				}
 				playVideo();
 				_playerReadyFlag = true;
 				
@@ -138,12 +147,19 @@
 				}
 			}
 			
+			private var _initialWidth:Number = -1;
+			private var _initialHeight:Number = -1;
 			public function setSize(w:Number, h:Number):void
 			{
 				if (ytPlayer) 
 				{
 					ytPlayer.setSize(w,h);
 				}				
+				else
+				{
+					_initialWidth = w;
+					_initialHeight = w;
+				}
 			}
 			
 			public function kill():void
