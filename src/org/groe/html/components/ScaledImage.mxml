@@ -78,9 +78,15 @@
 				super.data = value;
 			}
 			
-			//TODO
-			// - kill resize handler
-			
+			public function kill():void
+			{
+				if (_rootComponent)
+				{
+					_rootComponent.removeEventListener(Event.RESIZE, rootResizeHandler);
+					_rootComponent = null;
+				}
+			}
+						
 		]]>
 	</fx:Script>
 	
