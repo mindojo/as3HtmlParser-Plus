@@ -587,7 +587,10 @@ package org.groe.html
 					
 				case Constants.elementTypeOBJECT:
 					setDimensions(o, e);
-					(o as VideoContainer).rootComponent = rootComponent;
+					if (o is VideoContainer)
+					{
+						(o as VideoContainer).rootComponent = rootComponent;
+					}
 					break;					
 
 				default:
@@ -682,7 +685,6 @@ package org.groe.html
 					out.setStyle("fontSize", 11);
 					return out;
 					
-
 				case Constants.elementTypeSUB:
 					out = new HtmlLayoutGridItem();
 					out.setStyle("paddingBottom", -8);
@@ -692,7 +694,17 @@ package org.groe.html
 					return out;
 
 				case Constants.elementTypeOBJECT:
-					return new VideoContainer();
+					// for object tag used for displaying images ise ScaledImage object
+					if (e.attributeMap.type == "image/svg+xml")
+					{				
+						e.attributeMap["src"] = e.attributeMap["data"];						
+						e.tagName = "img";
+						return new ScaledImage();
+					}
+					else
+					{	
+						return new VideoContainer();
+					}
 			}
 
 			if (e.isBlock)

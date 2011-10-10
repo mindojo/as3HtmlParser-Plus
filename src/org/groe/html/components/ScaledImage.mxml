@@ -75,7 +75,7 @@
 			
 			override public function set data(value:Object):void
 			{
-				super.data = value;
+				super.data = value;				
 			}
 			
 			public function kill():void
