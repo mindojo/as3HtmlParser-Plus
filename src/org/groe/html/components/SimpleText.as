@@ -13,7 +13,7 @@ package org.groe.html.components
 		{
 			super();
 			setStyle("leading", 2);
-			setStyle("paddingLeft", -2);
+			setStyle("paddingLeft", -3);
 			setStyle("paddingRight", -3);
 			setStyle("paddingTop", -3);
 			setStyle("paddingBottom", -2);
