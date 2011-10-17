@@ -5,6 +5,7 @@ package org.groe.html
 {
 	import flash.xml.*;
 	
+	import mx.controls.Alert;
 	import mx.controls.Image;
 	
 	import org.groe.html.util.StringUtil;
@@ -17,6 +18,10 @@ package org.groe.html
 	{
 		//Match: < + (word characters) + whitespace + (everything until >) >
 		protected static var openTagRE:RegExp = new RegExp(/<(\w*)\s*([^>]*)>/);
+		
+		//Match: closed tag
+		protected static var closedTagRe:RegExp = /^<\/(\w*)\s*([^>]*)>$/;
+		
 		//Match: rgb(XXX, XXX, XXX)
 		protected static var colorRGBRE:RegExp = new RegExp(/rgb\s*\((\d*),\s*(\d*),\s*(\d*)\)/i);
 
@@ -187,7 +192,17 @@ package org.groe.html
 						if (currentElement != null)
 							currentElement.addChildElement(e);
 						else
-							elementArray.push(e);
+						{	
+							if (!closedTagRe.test(e.text))
+							{
+								elementArray.push(e);
+							}						
+							else
+							{
+								trace (e.text + " tag is omitted");
+							}
+							
+						}
 						continue;
 					}
 
