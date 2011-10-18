@@ -35,12 +35,12 @@ package org.groe.html.components
 		protected var isUpdating:Boolean = false;
 
 		public var brBeginningOfLinePaddingY:int = 2;
-		public var pDefaultPaddingTop:int = 15;
-		public var pDefaultPaddingBottom:int = 13;
+		public var pDefaultPaddingTop:int = 0;//15;
+		public var pDefaultPaddingBottom:int = 0;//13;
 		public var ulDefaultPaddingTop:int = 15;
 		public var ulDefaultPaddingBottom:int = 13;
 		public var pThenULPadding:int = 2;
-		public var pThenPPadding:int = 1;
+		public var pThenPPadding:int = 10;
 
 
 		public function HtmlLayoutContainer():void
@@ -51,6 +51,7 @@ package org.groe.html.components
 
 			//Hide background on this component and draw using backgroundComponent instead
 			setStyle("backgroundAlpha", 0);
+
 			backgroundComponent = new UIComponent();
 			addChild(backgroundComponent);
 			
