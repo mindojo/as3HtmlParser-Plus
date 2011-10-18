@@ -286,8 +286,8 @@ package org.groe.html
 				
 				case Constants.elementTypeB:
 				case Constants.elementTypeSTRONG:
-					//o.setStyle("fontFace", "bold");										
-					o.setStyle("fontFamily", fontFamilyBold);										
+					o.setStyle("fontWeight", "bold");										
+					//o.setStyle("fontFamily", fontFamilyBold);										
 					break;
 
 				case Constants.elementTypeBR:
@@ -317,8 +317,8 @@ package org.groe.html
 				case Constants.elementTypeEM:
 				case Constants.elementTypeI:
 				case Constants.elementTypeVAR:
-					//o.setStyle("fontStyle", "italic");
-					o.setStyle("fontFamily", fontFamilyItalic);					
+					o.setStyle("fontStyle", "italic");
+					//o.setStyle("fontFamily", fontFamilyItalic);					
 					break;
 
 				case Constants.elementTypeINS:
