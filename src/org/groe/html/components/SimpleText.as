@@ -12,7 +12,7 @@ package org.groe.html.components
 		public function SimpleText():void
 		{
 			super();
-			setStyle("leading", 2);
+
 			setStyle("paddingLeft", -3);
 			setStyle("paddingRight", -3);
 			setStyle("paddingTop", -3);
