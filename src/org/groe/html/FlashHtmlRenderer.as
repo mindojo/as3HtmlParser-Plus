@@ -678,8 +678,8 @@ package org.groe.html
 					return new Container();
 				case Constants.elementTypeSUP:			
 					out = new HtmlLayoutGridItem();
-					out.setStyle("paddingTop", 5);	
-					out.setStyle("paddingBottom", 5);
+					out.setStyle("paddingTop", 7);	
+					out.setStyle("paddingBottom", 4);
 					out.setStyle("paddingLeft", 1);
 					out.setStyle("paddingRight", 1);
 					out.setStyle("fontSize", 11);
@@ -687,7 +687,7 @@ package org.groe.html
 					
 				case Constants.elementTypeSUB:
 					out = new HtmlLayoutGridItem();
-					out.setStyle("paddingBottom", -8);
+					out.setStyle("paddingBottom", -10);
 					out.setStyle("paddingLeft", 1);
 					out.setStyle("paddingRight", 1);
 					out.setStyle("fontSize", 11);
