@@ -109,7 +109,7 @@
 					ytPlayer.setSize(playerWidth,playerHeight);
 					resizeMask(playerWidth,playerHeight);
 				}
-				playVideo();
+				if (!_stoppedFlag) playVideo();
 				_playerReadyFlag = true;
 				
 			}	
@@ -159,6 +159,7 @@
 					ytPlayer.cueVideoById(videoID,0);
 					ytPlayer.playVideo();					
 				}	
+				_stoppedFlag = false;
 			}
 			
 			public function stopVideo():void
@@ -168,15 +169,21 @@
 					ytPlayer.stopVideo();
 					ytPlayer.destroy();
 				}
+				_stoppedFlag = true;
 			}
 			
 			private var _initialWidth:Number = -1;
 			private var _initialHeight:Number = -1;
+			private var _stoppedFlag:Boolean = false;
+			
 			public function setSize(w:Number, h:Number):void
 			{
 				if (ytPlayer) 
 				{
-					ytPlayer.setSize(w,h);
+					if (ytPlayer.hasOwnProperty("setSize"))
+					{
+						ytPlayer.setSize(w,h);
+					}
 				}				
 				else
 				{
@@ -198,7 +205,10 @@
 			
 			public function kill():void
 			{
-				_loader.unloadAndStop();
+				if (_loader) 
+				{
+					_loader.unloadAndStop();
+				}
 			}
 				
 			

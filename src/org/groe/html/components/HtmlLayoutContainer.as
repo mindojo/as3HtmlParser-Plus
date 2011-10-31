@@ -695,7 +695,7 @@ Alert.show("lineHeightArray[i]=" + lineHeightArray[i]
 
 			if (getStyle("backgroundColor") != undefined)
 			{
-				backgroundComponent.move(0, 0);
+				backgroundComponent.move(0, -7);
 				backgroundComponent.setActualSize(_width, _height);
 
 				backgroundComponent.graphics.clear();

@@ -15,8 +15,9 @@ package org.groe.html.components
 
 			setStyle("paddingLeft", -3);
 			setStyle("paddingRight", -3);
-			setStyle("paddingTop", -4);
+			setStyle("paddingTop", -3);
 			setStyle("paddingBottom", -2);
+			
 		}
 	}
 }
