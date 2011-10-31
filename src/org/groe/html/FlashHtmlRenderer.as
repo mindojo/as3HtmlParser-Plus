@@ -660,7 +660,8 @@ package org.groe.html
 				case Constants.elementTypeBUTTON:
 					return new Button();
 				case Constants.elementTypeIMG:
-					return new ScaledImage();
+					out = new ScaledImage();	
+					return out;
 				case Constants.elementTypeLI:
 					return new ListItem();
 				case Constants.elementTypeTABLE:

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Image xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
-		  xmlns:mx="library://ns.adobe.com/flex/mx">
+		  xmlns:mx="library://ns.adobe.com/flex/mx" >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -61,7 +61,7 @@
 						var newWidth:Number = rootComponent.width;
 						var newHeight:Number = (rootComponent.width / defaultWidth) * defaultHeight;
 						width = newWidth;
-						height = newHeight 
+						height = newHeight;
 					}
 					else
 					{
@@ -70,6 +70,9 @@
 					}
 					
 				}
+				
+				// fix image padding issue
+				if (content) content.y = -3;
 				
 			}
 			
