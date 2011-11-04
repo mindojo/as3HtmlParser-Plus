@@ -82,12 +82,15 @@ package org.groe.html
 		}
 		public function set text(value:String):void
 		{
+			
+			
 			_text = value;
 			_childElementArray = null;
 			
 			_textIsEmpty = StringUtil.trim(_text).length == 0;
 
-			_isBlock = -1;
+			var newLineExp:RegExp = /^\n{1,}/; 
+			newLineExp.test(value)? _isBlock = 1 : _isBlock = -1;
 			_isLocalBlock = -1;
 		}
 

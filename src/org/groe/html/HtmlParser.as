@@ -291,7 +291,7 @@ package org.groe.html
 						elementArray.push(e);
 				}
 			}
-			
+						
 			return elementArray;
 		}
 

@@ -96,6 +96,7 @@ package org.groe.html.components
 				o.setActualSize(desiredWidth, o.height);
 			}
 			
+			//trace ("desiredWidth", desiredWidth);
 			return desiredWidth;
 			
 		}

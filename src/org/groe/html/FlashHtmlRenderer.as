@@ -6,7 +6,9 @@ package org.groe.html
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.net.URLRequest;
+	import flash.system.LoaderContext;
 	
 	import mx.containers.Grid;
 	import mx.containers.GridItem;
@@ -83,7 +85,7 @@ package org.groe.html
 			// If no component exists for this element type, return null
 			var o:UIComponent = createBaseObjectForElement(e);
 			
-			//Alert.show('renderHelper: ' + e._tagName + " " + o);
+//			Alert.show('renderHelper: ' + e._tagName + " " + o);
 			
 			if (o == null)
 				return null;						
@@ -223,6 +225,9 @@ package org.groe.html
 					if (o is Image)
 					{
 						(o as Image).source = e.attributeMap["src"];
+						(o as Image).loaderContext = new LoaderContext(true);
+						(o as Image).addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
+						(o as Image).trustContent = true;
 					}
 					
 					if (o is ScaledImage)
@@ -441,6 +446,8 @@ package org.groe.html
 						intValue = cellspacingDefault;
 					o.setStyle("horizontalGap", intValue);
 					o.setStyle("verticalGap", intValue);
+					
+					o.alpha = 0.5;
 
 /*
 					//Handle cellpadding attribute
@@ -644,7 +651,13 @@ package org.groe.html
 			
 			return o;
 		}
-
+		
+		protected function securityErrorHandler(event:SecurityErrorEvent):void
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		
 		public function createRootObject():UIComponent
 		{
 			return new RootHtmlContainer();
@@ -664,8 +677,8 @@ package org.groe.html
 					return out;
 				case Constants.elementTypeLI:
 					return new ListItem();
-				case Constants.elementTypeTABLE:
-					return new Grid();
+				case Constants.elementTypeTABLE:					
+					return new Grid();;
 				case Constants.elementTypeTR:
 					return new GridRow();
 				case Constants.elementTypeTD:
@@ -709,7 +722,9 @@ package org.groe.html
 			}
 
 			if (e.isBlock)
+			{
 				return new BlockLayoutContainer();
+			}
 			else
 				return new InlineLayoutContainer();
 		}

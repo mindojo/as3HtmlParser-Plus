@@ -72,7 +72,11 @@
 				}
 				
 				// fix image padding issue
-				if (content) content.y = -3;
+				try
+				{
+					if (content) content.y = -3;
+				}
+				catch (e:Error) {}
 				
 			}
 			
