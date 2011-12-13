@@ -4,14 +4,17 @@
 package org.groe.html.components
 {
 	import flash.display.DisplayObject;
+	
 	import mx.containers.Canvas;
-	import mx.core.UIComponent;
+	import mx.controls.Alert;
+	import mx.controls.Button;
+	import mx.controls.Label;
+	import mx.controls.Text;
 	import mx.core.FlexShape;
-
-import mx.controls.Text;
-
-//For testing
-import mx.controls.Alert;
+	import mx.core.UIComponent;
+	
+	import org.groe.html.Constants;
+	import org.groe.html.Element;
 
 
 	public class ListItem extends Canvas
@@ -21,13 +24,17 @@ import mx.controls.Alert;
 		protected var type:String;
 
 		
+		public var typeIndex:String = "index";
 		public var typeDisc:String = "disc";
 
 		public var defaultType:String = typeDisc;
 		public var defaultDiscSize:int = 3;
 		
+		public var indexComponentWidth:Number = 20;
 		public var bulletSpacerX:int = 0;
 		public var childSpacerX:int = 8;
+
+		private var indexComponent:Text;
 
 
 		public function ListItem():void
@@ -35,12 +42,23 @@ import mx.controls.Alert;
 			super();
 			horizontalScrollPolicy = "off";
 			verticalScrollPolicy = "off";
+			clipContent = false;
 			
 			bulletComponent = new UIComponent();
 			super.addChildAt(bulletComponent, 0);
+			
+			indexComponent = new Text();	
+			indexComponent.width = indexComponentWidth;
+			indexComponent.setStyle("textAlign", "right");
+			indexComponent.text = "";
+			indexComponent.y = -3;
+			indexComponent.alpha = .5;
+			super.addChildAt(indexComponent,0);
+			
 
 			childObject = new HtmlLayoutContainer();
 			super.addChildAt(childObject, 1);
+			
 
 			try
 			{
@@ -59,8 +77,35 @@ import mx.controls.Alert;
 		override public function set data(value:Object):void
 		{
 			childObject.data = value;
+			
+			if (value && value.parentElement)
+			{
+				
+				if (value.parentElement.elementType == Constants.elementTypeUL)
+				{
+					setType(typeDisc);						
+				}
+				else
+				{
+					setType(typeIndex);	
+					setIndex(value);
+				}
+			}
+			
 		}
-
+		
+		private function setIndex(value:Object):void
+		{
+			var index:int = value.parentElement.childElementArray.indexOf(value);						
+			indexComponent.text = (index+1) + ".";
+			
+			var dx:Number = Math.floor((index+1)/10)*10;
+			indexComponentWidth = dx + 20;
+			indexComponent.width = indexComponentWidth;
+			indexComponent.x = -dx;
+			
+		}
+		
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
 			return childObject.addChild(child);
@@ -135,6 +180,15 @@ import mx.controls.Alert;
 					bulletComponent.addChild(disc);
 					bulletComponent.width = disc.width
 					bulletComponent.height = disc.height;
+					
+					bulletComponent.visible = true;
+					indexComponent.visible = false;
+					break;
+				case typeIndex:
+					bulletComponent.width = indexComponentWidth;
+					bulletComponent.height = 20;
+					bulletComponent.visible = false;
+					indexComponent.visible = true;
 					break;
 				default:
 					bulletComponent.setActualSize(0, 0);

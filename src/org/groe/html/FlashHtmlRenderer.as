@@ -42,12 +42,6 @@ package org.groe.html
 		public static const defaultHorizontalAlign:int = Constants.horizontalAlignTypeLeft;
 		public static const defaultVerticalAlign:int = Constants.verticalAlignTypeBaseline;
 		
-		public static const fontFamilyBold:String = "DroidSansNonCFFBold";
-		public static const fontFamilyItalic:String = "DroidNonCFFItalic";
-		
-		
-
-
 		public function FlashHtmlRenderer():void
 		{
 		}
@@ -274,13 +268,18 @@ package org.groe.html
 								flash.net.navigateToURL(new URLRequest(href), e.attributeMap["target"]);
 						});
 					break;
-
+				
 				case Constants.elementTypeUL:
 					//o.setStyle("marginLeft", 20);
 					o.setStyle("paddingLeft", 20);
 					break;
-
+				
+				case Constants.elementTypeOL:
+					o.setStyle("paddingLeft", 20);
+					break;
+				
 				case Constants.elementTypeLI:
+					o.setStyle("paddingTop", 6);
 					break;
 
 				case Constants.elementTypeABBR:
@@ -354,40 +353,40 @@ package org.groe.html
 					break;
 
 				case Constants.elementTypeH1:
-					o.setStyle("paddingTop", 20);
+					o.setStyle("paddingTop", 5);
 					o.setStyle("fontSize", 30);
 					o.setStyle("fontWeight", "bold");
-					o.setStyle("paddingBottom", 20);
+					o.setStyle("paddingBottom", 5);
 					break;
 				case Constants.elementTypeH2:
-					o.setStyle("paddingTop", 20);
+					o.setStyle("paddingTop", 5);
 					o.setStyle("fontSize", 22);
 					o.setStyle("fontWeight", "bold");
-					o.setStyle("paddingBottom", 20);
+					o.setStyle("paddingBottom", 5);
 					break;
 				case Constants.elementTypeH3:
-					o.setStyle("paddingTop", 20);
+					o.setStyle("paddingTop", 5);
 					o.setStyle("fontSize", 18);
 					o.setStyle("fontWeight", "bold");
-					o.setStyle("paddingBottom", 20);
+					o.setStyle("paddingBottom", 5);
 					break;
 				case Constants.elementTypeH4:
-					o.setStyle("paddingTop", 20);
+					o.setStyle("paddingTop", 5);
 					o.setStyle("fontSize", 16);
 					o.setStyle("fontWeight", "bold");
-					o.setStyle("paddingBottom", 20);
+					o.setStyle("paddingBottom", 5);
 					break;
 				case Constants.elementTypeH5:
-					o.setStyle("paddingTop", 20);
+					o.setStyle("paddingTop", 5);
 					o.setStyle("fontSize", 14);
 					o.setStyle("fontWeight", "bold");
-					o.setStyle("paddingBottom", 20);
+					o.setStyle("paddingBottom", 5);
 					break;
 				case Constants.elementTypeH6:
-					o.setStyle("paddingTop", 20);
+					o.setStyle("paddingTop", 5);
 					o.setStyle("fontSize", 12);
 					o.setStyle("fontWeight", "bold");
-					o.setStyle("paddingBottom", 20);
+					o.setStyle("paddingBottom", 5);
 					break;
 
 				case Constants.elementTypeSMALL:
