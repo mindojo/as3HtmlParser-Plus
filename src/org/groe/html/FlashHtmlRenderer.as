@@ -37,10 +37,13 @@ package org.groe.html
 		public static const blockQuoteDefaultPaddingLeft:int = 30;
 		public static const blockQuoteDefaultPaddingTop:int = 15;
 		public static const blockQuoteDefaultPaddingBottom:int = 15;
-		public static const cellspacingDefault:int = 2;
+		public static const cellspacingDefault:int = -1;
 		public static const textSpaceOffsetX:int = -2;
 		public static const defaultHorizontalAlign:int = Constants.horizontalAlignTypeLeft;
 		public static const defaultVerticalAlign:int = Constants.verticalAlignTypeBaseline;
+
+		public static var default_table_padding:int = 3;
+		public static var default_table_margin:int = 17;
 		
 		public function FlashHtmlRenderer():void
 		{
@@ -113,7 +116,8 @@ package org.groe.html
 							e.horizontalAlignSetLocally = true;
 						}
 					}
-
+					
+					o.styleName = "prompt_p";
 					break;
 
 				case Constants.elementTypeBLOCKQUOTE:
@@ -271,11 +275,13 @@ package org.groe.html
 				
 				case Constants.elementTypeUL:
 					//o.setStyle("marginLeft", 20);
-					o.setStyle("paddingLeft", 20);
+					//o.setStyle("paddingLeft", 20);
+					o.styleName = "stepWrapper_ul";
 					break;
 				
 				case Constants.elementTypeOL:
-					o.setStyle("paddingLeft", 20);
+					//o.setStyle("paddingLeft", 20);
+					o.styleName = "stepWrapper_ol";
 					break;
 				
 				case Constants.elementTypeLI:
@@ -353,28 +359,33 @@ package org.groe.html
 					break;
 
 				case Constants.elementTypeH1:
-					o.setStyle("paddingTop", 5);
-					o.setStyle("fontSize", 30);
-					o.setStyle("fontWeight", "bold");
-					o.setStyle("paddingBottom", 5);
+//					o.setStyle("paddingTop", 5);
+//					o.setStyle("fontSize", 30);
+//					o.setStyle("fontWeight", "bold");
+//					o.setStyle("paddingBottom", 5);
+					
+					o.styleName = "stepWrapper_h1";
 					break;
 				case Constants.elementTypeH2:
-					o.setStyle("paddingTop", 5);
-					o.setStyle("fontSize", 22);
-					o.setStyle("fontWeight", "bold");
-					o.setStyle("paddingBottom", 5);
+//					o.setStyle("paddingTop", 5);
+//					o.setStyle("fontSize", 22);
+//					o.setStyle("fontWeight", "bold");
+//					o.setStyle("paddingBottom", 5);
+					o.styleName = "stepWrapper_h2";
 					break;
 				case Constants.elementTypeH3:
-					o.setStyle("paddingTop", 5);
-					o.setStyle("fontSize", 18);
-					o.setStyle("fontWeight", "bold");
-					o.setStyle("paddingBottom", 5);
+//					o.setStyle("paddingTop", 5);
+//					o.setStyle("fontSize", 18);
+//					o.setStyle("fontWeight", "bold");
+//					o.setStyle("paddingBottom", 5);
+					o.styleName = "stepWrapper_h3";
 					break;
 				case Constants.elementTypeH4:
-					o.setStyle("paddingTop", 5);
-					o.setStyle("fontSize", 16);
-					o.setStyle("fontWeight", "bold");
-					o.setStyle("paddingBottom", 5);
+//					o.setStyle("paddingTop", 5);
+//					o.setStyle("fontSize", 16);
+//					o.setStyle("fontWeight", "bold");
+//					o.setStyle("paddingBottom", 5);
+					o.styleName = "stepWrapper_h4";
 					break;
 				case Constants.elementTypeH5:
 					o.setStyle("paddingTop", 5);
@@ -411,8 +422,14 @@ package org.groe.html
 					break;
 
 				case Constants.elementTypeTABLE:
+										
+					//e.styleAttributeMap["width"] = "95%";
 					setDimensions(o, e, true);
-
+					
+					//e.styleAttributeMap["borderThickness"] = 4;
+					//o.setStyle("borderThickness", 4);
+					o.setStyle("marginTop", default_table_margin);					
+					
 					//Handle align attribute
 					value = e.attributeMap["align"];
 					if ( !StringUtil.isEmpty(value) )
@@ -443,11 +460,10 @@ package org.groe.html
 					}
 					else
 						intValue = cellspacingDefault;
+					
 					o.setStyle("horizontalGap", intValue);
 					o.setStyle("verticalGap", intValue);
 					
-					o.alpha = 0.5;
-
 /*
 					//Handle cellpadding attribute
 					value = e.attributeMap["cellpadding"];
@@ -459,10 +475,10 @@ package org.groe.html
 					else
 						intValue = 2;
 */
-
 					break;
 
 				case Constants.elementTypeTR:
+					e.styleAttributeMap["width"] = "100%";
 					setDimensions(o, e, true);
 
 					//Handle align attribute
@@ -489,16 +505,14 @@ package org.groe.html
 							o.setStyle("htmlVerticalAlignScalor", a[0]);
 							o.setStyle("htmlVerticalAlignType", a[1]);
 						}
-					}
-
+					}				
 					break;
 
-				case Constants.elementTypeTH:
-					o.setStyle("fontWeight", "bold");
-					o.setStyle("horizontalAlign", "center");
+				case Constants.elementTypeTH:										
 				case Constants.elementTypeTD:
-					setDimensions(o, e, true);
-
+					
+					//e.styleAttributeMap["width"] = "100%";
+					setDimensions(o, e, false);					
 					if (o is GridItem)
 					{
 						var gi:GridItem = o as GridItem;
@@ -558,6 +572,11 @@ package org.groe.html
 							o.setStyle("htmlVerticalAlignType", a[1]);
 						}
 					}
+					
+					o.setStyle("paddingLeft", default_table_padding);
+					o.setStyle("paddingRight", default_table_padding);
+					o.setStyle("paddingTop", default_table_padding);
+					o.setStyle("paddingBottom", default_table_padding);
 
 					break;
 				
