@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Image xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
-		  xmlns:mx="library://ns.adobe.com/flex/mx" >
+		  xmlns:mx="library://ns.adobe.com/flex/mx">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -43,16 +43,16 @@
 
 			protected function rootResizeHandler(event:ResizeEvent):void
 			{
+								
 				if (rootComponent.width != 0 
 						&& rootComponent.height != 0 
 							&& width != 0 
 								&& height != 0 )
-				{
-						
+				{					
 					if (defaultWidth == -1 || defaultHeight == -1)
 					{
 						if (contentWidth) defaultWidth = contentWidth;
-						if (contentHeight) defaultHeight = contentHeight;
+						if (contentHeight) defaultHeight = contentHeight ;
 						return;						
 					}
 					
@@ -71,13 +71,6 @@
 					
 				}
 				
-				// fix image padding issue
-				try
-				{
-					if (content) content.y = -3;
-				}
-				catch (e:Error) {}
-				
 			}
 			
 			override public function set data(value:Object):void
@@ -91,6 +84,17 @@
 				{
 					_rootComponent.removeEventListener(Event.RESIZE, rootResizeHandler);
 					_rootComponent = null;
+				}
+			}
+			
+			override protected function updateDisplayList(w:Number, h:Number):void
+			{
+				super.updateDisplayList(w, h);
+				
+				// fix image cropping by updaing the y position of the loaded content 
+				if (content) 
+				{
+					content.y = -y;
 				}
 			}
 						
