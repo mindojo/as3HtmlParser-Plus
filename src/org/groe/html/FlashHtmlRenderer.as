@@ -217,13 +217,12 @@ package org.groe.html
 							setDimensions(component, el, true);
 							rootComponent.dispatchEvent( new ObjectLoadedEvent(component) );
 						});
-					
-
 					//Finally set source to start loading
 					if (o is Image)
 					{
 						(o as Image).source = e.attributeMap["src"];
 						(o as Image).loaderContext = new LoaderContext(true);
+                        (o as Image).loaderContext.checkPolicyFile = false;
 						(o as Image).addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
 						(o as Image).trustContent = true;
 					}
