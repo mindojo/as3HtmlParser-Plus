@@ -690,7 +690,7 @@ package org.groe.html
 				case Constants.elementTypeBUTTON:
 					return new Button();
 				case Constants.elementTypeIMG:
-					out = new ScaledImage();	
+					out = new Image();	
 					return out;
 				case Constants.elementTypeLI:
 					return new ListItem();
@@ -708,7 +708,7 @@ package org.groe.html
 				case Constants.elementTypeTFOOT:
 					return new Container();
 				case Constants.elementTypeSUP:			
-					out = new HtmlLayoutGridItem();
+					out = new HtmlSubSupGridItem();
 					out.setStyle("paddingTop", 7);	
 					out.setStyle("paddingBottom", 4);
 					out.setStyle("paddingLeft", 1);
@@ -717,11 +717,13 @@ package org.groe.html
 					return out;
 					
 				case Constants.elementTypeSUB:
-					out = new HtmlLayoutGridItem();
+					out = new HtmlSubSupGridItem();
 					out.setStyle("paddingBottom", -10);
 					out.setStyle("paddingLeft", 1);
 					out.setStyle("paddingRight", 1);
 					out.setStyle("fontSize", 11);
+					out.setStyle("backgroundAlpha", 0);
+					out.setStyle("borderThickness", 0);					
 					return out;
 
 				case Constants.elementTypeOBJECT:
