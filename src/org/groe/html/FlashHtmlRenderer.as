@@ -695,13 +695,17 @@ package org.groe.html
 				case Constants.elementTypeLI:
 					return new ListItem();
 				case Constants.elementTypeTABLE:					
-					return new Grid();;
+                    if (e.parentElement && e.parentElement.elementType == Constants.elementTypeTABLE)
+                        return null;
+                    return new Grid();
 				case Constants.elementTypeTR:
 					return new GridRow();
 				case Constants.elementTypeTD:
 				case Constants.elementTypeTH:
 					return new HtmlLayoutGridItem();
 				case Constants.elementTypeTEXT:
+                    if (e.parentElement.elementType == Constants.elementTypeTABLE)
+                        return null;
 					return new SimpleText();
 				case Constants.elementTypeTBODY:
 				case Constants.elementTypeTHEAD:
